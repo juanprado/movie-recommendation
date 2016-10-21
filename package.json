@@ -1,0 +1,14 @@
+{
+  "name": "movie-recommendation",
+  "version": "1.0.0",
+  "description": "Movie recommendation app for Alexa",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Team Decoders",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
