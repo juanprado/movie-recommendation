@@ -17,7 +17,7 @@
         
         // new movie socket
         socket.on("foo", function(movies) { 
-          initMovie(movies.data.results[0]) 
+          initMovie(movies.data) 
         });
 
         // new movie added function
