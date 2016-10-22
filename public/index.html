@@ -35,6 +35,7 @@ footer, header, hgroup, menu, nav, section {
   display: block;
 }
 body {
+  background: #F7F7F7;
   line-height: 1;
 }
 ol, ul {
@@ -53,40 +54,42 @@ table {
   border-spacing: 0;
 }
 
+body {
+  font-family: "Roboto";
+}
+
 h1 { 
   font-family: "Roboto";
 }
 
-#movie-description {
+/*#movie-description {
   font-family: "Roboto";
   font-size: 14px;
-  font-style: light;
-  font-variant: light;
   font-weight: 100;
   line-height: 20px;
   background-color: #F0F0F0;
   left: 218px;
-  top: 0 px;
+  top: 0px;
   padding: 20px;
   padding-top: 50px;
   position: absolute;
   opacity: 0;
   width: 500px;
-}
+}*/
   
   .movie-card {
-  background-color: white;
+  background-color: #F7F7F7;
   padding: 10px;
 
     
   }
   
   .movie-title {
-  font-size: 50px;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 500;
-  line-height: 26.4px;
+  font-size: 60px;
+  font-style: light;
+  font-variant: light;
+  font-weight: 200;
+  line-height: 30px;
   top: 0px;
   
   
@@ -108,6 +111,9 @@ h1 {
     display: block;
     position: absolute;
     z-index: 1 ;
+
+
+    
   }
 
   .welcome { 
@@ -128,6 +134,36 @@ h1 {
     background: black;
   }
 
+
+  /* movie card */
+
+  .movie-card {
+    overflow: auto;
+  }
+
+  .movieImage-container { 
+    width: 322px;
+    float: left;
+  }
+
+  .movieImage-container img { 
+    width: 100%;
+    height: auto;
+   }
+
+   .description { 
+    top: 200px;
+    float: left;
+    display: block;
+    width: 620px;
+    padding: 80px;
+    background: white;
+    line-height: 30px;
+    font: #838383;
+
+
+  }
+
 </style>
 
 
@@ -139,25 +175,32 @@ h1 {
 
     <!-- PAGES --> 
     <div class="page welcome hidden">
+      <h1> Welcome to Movie Recommender </h1>
     </div>
 
     <div class="page play hidden">
+      <h1> Playing Movie </h1>
     </div>
 
     <div class="header">
-
-
-    </div>
-
-    <div class="wrapper">
+      <h3> Movie Recommender </h3>
     </div>
 
 
     <div class="movie-card">
+
       <h1 class="movie-title">Movie title</h1>
-      <div class="movieImage-container"><img class="movie-image" src="https://image.tmdb.org/t/p/w185_and_h278_bestv2/cNLZ7YGRikb4IsLblrzu86ndZPw.jpg" /></div>
-      <p id="movie-description" class="movie-description">This is a movie description</p>
+
+      <div class="movieImage-container">
+        <img class="movie-image" src="https://image.tmdb.org/t/p/w185_and_h278_bestv2/cNLZ7YGRikb4IsLblrzu86ndZPw.jpg" />
+      </div>
+
+      <div class="description">
+        <p class="movie-description">This is a movie description</p>
+      </div>
+
     </div>
+
 
     <br>
     
@@ -222,13 +265,13 @@ h1 {
         
         //my animations  
     //$(".movie-title").animate({opacity: "1"},400,"swing");
-    $(".movie-title").animate({top: "300px"},1000,"easeInCubic");
-    $(".movie-title").delay(1000).animate({opacity: "1"},900,"easeInCubic");
+        //$(".movie-title").animate({top: "300px"},1000,"easeInCubic");
+        //$(".movie-title").delay(1000).animate({opacity: "1"},900,"easeInCubic");
     
-        $(".movie-image").animate({opacity: "1"},700,"easeInCubic");
+        //$(".movie-image").animate({opacity: "1"},700,"easeInCubic");
 
-        $(".movie-description").animate({opacity: ".5"},100,"easeInCubic");
-        $(".movie-description").animate({top: "97px"},900,"easeInCubic").delay(100).animate({height: "210px"},"easeInCubic");
+        //$(".movie-description").animate({opacity: ".5"},100,"easeInCubic");
+        //$(".movie-description").animate({top: "97px"},900,"easeInCubic").delay(100).animate({height: "210px"},"easeInCubic");
           
           
         }
