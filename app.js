@@ -1,10 +1,46 @@
+var express = require("express")
 var express = require('express');
-var app = express();
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var methodOverride = require('method-override');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+var multer = require('multer');
+var errorHandler = require('errorhandler');
+var path = require('path');
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
+var http = require('http'),
+app = express(),
+server = http.createServer(app),
+io = require("socket.io").listen(server);
+
+app.set('port', process.env.PORT || 3000);
+app.use(methodOverride());
+app.use(session({ resave: true, saveUninitialized: true, 
+                      secret: 'uwotm8' }));
+
+// parse application/json
+app.use(bodyParser.json());                        
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// parse multipart/form-data
+app.use(multer());
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get("/", function(req, res, next) {
+    res.send(__dirname + "/index.html", "utf8");
 });
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+app.put("/movie", function(req, res, next) {
+    console.log('ABOUT TO PRINT STUFF');
+    console.log(req.body);
+    io.sockets.emit("foo", {data: req.body});
+    res.send({"foo": true});
+});
+
+server.listen(app.get('port'), function(){
+    console.log('Express server on port ' + app.get('port'));
 });
