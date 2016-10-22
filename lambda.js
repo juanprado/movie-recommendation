@@ -438,7 +438,11 @@ var maybeList = [];
 
 var API_URL = 'http://api.themoviedb.org/3/';
 
-var API_KEY = '6bb87fb98375ab63c66f861383a89cb3';
+var API_KEY = 'YOUR movie database api';
+
+var WEB_URL = 'your web app endpoint';
+
+var WEB_PATH = '/movie';
 
 
 // --------------- Helpers that build all of the responses -----------------------
@@ -524,8 +528,7 @@ function setGenreInSession(intent, session, callback) {
         speechOutput = "The first recommendation is " + selectedMovie.title + '. would you like to watch this movie. Yes or No?';
         repromptText = speechOutput;
 
-        callback(sessionAttributes,
-          buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
+        setNewRecommendation(callback, speechOutput, selectedMovie, cardTitle, sessionAttributes);
     }
 }
 
@@ -560,20 +563,57 @@ function getGenreMovies(genre) {
  */
 function getNewRecommendation(intent, session, callback) {
     const cardTitle = intent.name;
-    let repromptText = '';
-    let sessionAttributes = {};
-    const shouldEndSession = false;
     let speechOutput = '';
     let selectedMovie;
+    let sessionAttributes = {};
     
     noList.push(unsortedMovies[0].id);
     unsortedMovies.shift();
     selectedMovie = unsortedMovies[0];
     speechOutput = "Ok, we won't show you that again, the next recommendation is " + selectedMovie.title + '. would you like to watch this movie. Yes or No?';
-    repromptText = speechOutput;
+
+    setNewRecommendation(callback, speechOutput, selectedMovie, cardTitle, sessionAttributes);
+}
+
+/**
+ * Send recommendation to web app, on success - alexa will recommend new film
+ */
+function setNewRecommendation(callback, speechOutput, selectedMovie, cardTitle, sessionAttributes) {
+    let repromptText = speechOutput;
+    let shouldEndSession = false;
+    var body = JSON.stringify(selectedMovie);
+
+    // the post options
+    var options = {
+        host: WEB_URL,
+        path: WEB_PATH,
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    };
     
-    callback(sessionAttributes,
-         buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
+    var httpCallback = function(response) {
+        var str = ''
+        response.on('data', function(chunk){
+            str += chunk
+        })
+
+        response.on('end', function(){
+            callback(sessionAttributes,
+                buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
+        })
+        
+        response.on('error', function() {
+            speechOutput = 'An error occurred, please try again later';
+            repromptText = speechOutput;
+
+            callback(sessionAttributes,
+                buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));            
+        })
+    }
+
+    http.request(options, httpCallback).end(body);
 }
 
 /**
@@ -581,30 +621,17 @@ function getNewRecommendation(intent, session, callback) {
  */
 function saveForLater(intent, session, callback) {
     const cardTitle = intent.name;
-    let repromptText = '';
     let sessionAttributes = {};
-    const shouldEndSession = false;
+    let selectedMovie = {};
     let speechOutput = '';
-    let selectedMovie;
     
     maybeList.push(unsortedMovies[0].id);
     unsortedMovies.splice(5, 0, unsortedMovies[0]);
     unsortedMovies.shift();
     selectedMovie = unsortedMovies[0];
     speechOutput = "Saving that one for later, the next recommendation is " + selectedMovie.title + '. would you like to watch this movie. Yes or No?';
-    repromptText = speechOutput;
     
-    callback(sessionAttributes,
-         buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
-}
-
-function getMovieRecommendations(intent, session, callback){
-    const movie = intent.slots.Movie;
-    if(movie){
-        http.get("the url?query="+movie, function(res){
-            
-        })
-    }
+    setNewRecommendation(callback, speechOutput, selectedMovie, cardTitle, sessionAttributes);
 }
 
 
