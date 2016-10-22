@@ -21,9 +21,9 @@ var maybeList = [];
 
 var API_URL = 'api.themoviedb.org';
 
-var API_KEY = '6bb87fb98375ab63c66f861383a89cb3';
+var API_KEY = '-- THE MOVIE DB API --';
 
-var WEB_URL = '69f7f269.ngrok.io';
+var WEB_URL = '-- THE WEB APP URL --';
 
 var WEB_PATH = '/movie';
 

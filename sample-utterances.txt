@@ -1,0 +1,29 @@
+GetMovieGenre i would like to see a {genre | Genre}
+GetMovieGenre i would like to see an {genre | Genre}
+GetMovieGenre i want to see a {genre | Genre}
+GetMovieGenre i want to see an {genre | Genre}
+GetMovieGenre i wanna see a {genre | Genre}
+GetMovieGenre i wanna see an {genre | Genre}
+GetMovieGenre im in the mood for a {genre | Genre}
+GetMovieGenre im in the mood for an {genre | Genre}
+GetMovieGenre show me a {genre | Genre} recommendation 
+GetMovieGenre recommend me a good {genre | Genre} 
+GetMovieGenre recommend me a {genre | Genre}
+GetMovieGenre show me {genre | Genre} 
+
+SaveForLater I want to save that for later
+SaveForLater save it for later
+SaveForLater maybe
+SaveForLater maybe later 
+SaveForLater save for later 
+SaveForLater save that one for later 
+SaveForLater I dont know 
+SaveForLater I dont know maybe 
+SaveForLater not right now
+
+ShowMaybes show me the ones i saved for later
+ShowMaybes show me maybes
+ShowMaybes show maybes
+ShowMaybes show maybe list 
+ShowMaybes show the movies I said maybe to 
+ShowMaybes show my undecided movies 
