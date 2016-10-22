@@ -92,8 +92,6 @@ h1 {
   top: 0px;
   display: block;
   padding: 50px 0px;
-  
-  
   }
 
 /*  .movieImage-container {
@@ -128,6 +126,10 @@ h1 {
   .play {
     background: snow;
     font-size: 64px; 
+  }
+
+  .play .movie-title {
+    padding: 50px;
   }
 
   .hidden {
@@ -188,6 +190,10 @@ h1 {
     border-bottom: 1px solid black;
   }
 
+  .maybes-list {
+    display: none;
+  }
+
 </style>
 
 
@@ -201,7 +207,6 @@ h1 {
     <div class="page welcome">
       <h3>Welcome to</h3>
       <h1>MovieRecommender </h1>
-
     </div>
 
     <div class="page play hidden">
@@ -214,18 +219,19 @@ h1 {
 
 
     <div class="movie-card">
-
       <h1 class="movie-title">Movie title</h1>
-
       <div class="movieImage-container">
         <img class="movie-image" src="https://image.tmdb.org/t/p/w185_and_h278_bestv2/cNLZ7YGRikb4IsLblrzu86ndZPw.jpg" />
       </div>
-
       <div class="description">
         <h2> Movie Description </h2>
         <p class="movie-description">This is a movie description</p>
       </div>
+    </div>
 
+    <div class="maybes-list-container">
+      <ul class="maybes-list">
+      </ul>
     </div>
 
 
@@ -289,35 +295,40 @@ h1 {
         // new movie added function
         function initMovie() {
           showNewMovie();
+          $('.maybes-list').html()
+          populateMaybes();
           $(".welcome").addClass("hidden");
         }
 
         function movieAccepted() {
-          alert('movie was accepted');
-
           $(".play").removeClass("hidden");
-
-          $('.movie-title').text("Playing " + movie.title);
-
+          $('.movie-title').text("Now playing " + movie.title);
         }
 
         function showMaybeList() {
-          console.log(maybeList);
+          $('.movie-card').hide();
+          $('.maybes-list').show();
+        }
+
+        function populateMaybes() {
+          var list = $('.maybes-list');
+
+          $.each(maybeList, function(i){
+            var li = $('<li/>').addClass('ui-menu-item').appendTo(list);
+            var h2 = $('<h2/>').addClass('list-movie-title').appendTo(li);
+            var img = $('<img/>').addClass('list-movie-img').attr('src','https://image.tmdb.org/t/p/w185_and_h278_bestv2' + this.poster_path).appendTo(li);
+          });
         }
 
         // show new movie
         function showNewMovie() {
           console.log(movie);
-          
+          $('movie-card').show();
           $('.movie-title').text(movie.title);
           $('.movie-image').attr('src', 'https://image.tmdb.org/t/p/w185_and_h278_bestv2' + movie.poster_path );
           $('.movie-description').text(movie.overview);
-
           $('.movie-popularity').text(Math.floor(parseInt(movie.popularity)))          
         }
-        
-        showNewMovie();
-
 
     </script>
   </head>
