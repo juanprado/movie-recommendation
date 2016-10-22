@@ -1,15 +1,89 @@
 <!doctype html>
 <html>
+
+<style>
+
+#movie-description {
+	font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+	font-size: 14px;
+	font-style: light;
+	font-variant: light;
+	font-weight: 100;
+	line-height: 20px;
+	background-color: #F0F0F0;
+	
+	left: 218px;
+	top: 0 px;
+	padding: 20px;
+	padding-top: 50px;
+  position: absolute;
+  opacity: 0;
+  width: 500px;
+}
+  
+  .movie-card {
+  background-color: white;
+  padding: 10px;
+
+	  
+  }
+  
+  .movie-title {
+font-family: Didot, "Didot LT STD", "Hoefler Text", Garamond, "Times New Roman", serif;
+	font-size: 50px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.4px;
+	top: 0px;
+	
+	
+  }
+
+  .movieImage-container {
+  opacity: 1;
+  width: 200px;
+  background-color: white;
+  top: 400px;
+	  
+  }
+
+  
+  
+  
+
+
+
+</style>
+
+
+
+
+
+
+
   <body>
+
     <div class="movie-card">
       <h1 class="movie-title">Movie title</h1>
-      <img class="movie-image" src="https://image.tmdb.org/t/p/w185_and_h278_bestv2/cNLZ7YGRikb4IsLblrzu86ndZPw.jpg"" />
-      <p class="movie-description">This is a movie description</p>
+      <div class="movieImage-container"><img class="movie-image" src="https://image.tmdb.org/t/p/w185_and_h278_bestv2/cNLZ7YGRikb4IsLblrzu86ndZPw.jpg" /></div>
+      <p id="movie-description" class="movie-description">This is a movie description</p>
     </div>
+    
+    
+    <br>
+
+    
+    
+    
+    
+    
+    
   </body>
   <head>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
     <script>
     
     	//sample movie object
@@ -36,6 +110,7 @@ vote_average: 8.06
 };
      
         
+        
         // open socket connection
         var socket = io("http://684e2413.ngrok.io");
         
@@ -52,12 +127,45 @@ vote_average: 8.06
         // show new movie
         function showNewMovie(movie) {
           console.log(movie);
+       
+
+          
+          
+          
+          
+          
+          
+          
           $('.movie-title').text(movie.title);
           $('.movie-image').attr('src', 'https://image.tmdb.org/t/p/w185_and_h278_bestv2' + movie.poster_path );
           $('.movie-description').text(movie.overview);
+        
+        
+        
+        //my animations  
+		//$(".movie-title").animate({opacity: "1"},400,"swing");
+		$(".movie-title").animate({top: "300px"},1000,"swing");
+		$(".movie-title").delay(1000).animate({opacity: "1"},900,"swing");
+		
+        $(".movie-image").animate({opacity: "1"},700,"swing");
+
+        $(".movie-description").animate({opacity: ".5"},100,"swing");
+        $(".movie-description").animate({top: "97px"},900,"swing").delay(100).animate({height: "210px"});
+          
+          
         }
         
         showNewMovie(sampleMovie);
+
+
+
+
+
+
+
+
+
+
 
     </script>
   </head>
