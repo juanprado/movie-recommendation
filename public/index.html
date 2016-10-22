@@ -16,13 +16,21 @@
         var socket = io("http://69f7f269.ngrok.io");
         
         // new movie socket
-        socket.on("foo", function(movies) { 
+        socket.on("newMovie", function(movies) { 
           initMovie(movies.data) 
+        });
+
+        socket.on("accepted", function(data) {
+          movieAccepted();
         });
 
         // new movie added function
         function initMovie(movie) {
           showNewMovie(movie);
+        }
+
+        function movieAccepted() {
+          alert('movie was accepted');
         }
 
         // show new movie

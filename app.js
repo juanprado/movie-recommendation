@@ -35,9 +35,14 @@ app.get("/", function(req, res, next) {
 });
 
 app.put("/movie", function(req, res, next) {
-    console.log('ABOUT TO PRINT STUFF');
     console.log(req.body);
-    io.sockets.emit("foo", {data: req.body});
+    io.sockets.emit("newMovie", {data: req.body});
+    res.send({"foo": true});
+});
+
+app.put("/accept", function(req, res, next) {
+    console.log(req.body);
+    io.sockets.emit("accepted", {data: req.body});
     res.send({"foo": true});
 });
 
