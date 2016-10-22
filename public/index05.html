@@ -35,7 +35,6 @@ footer, header, hgroup, menu, nav, section {
   display: block;
 }
 body {
-  background: #F7F7F7;
   line-height: 1;
 }
 ol, ul {
@@ -54,55 +53,52 @@ table {
   border-spacing: 0;
 }
 
-body {
-  font-family: "Roboto";
-}
-
 h1 { 
   font-family: "Roboto";
 }
 
-/*#movie-description {
+#movie-description {
   font-family: "Roboto";
-  font-size: 14px;
-  font-weight: 100;
-  line-height: 20px;
-  background-color: #F0F0F0;
-  left: 218px;
-  top: 0px;
-  padding: 20px;
-  padding-top: 50px;
+	font-size: 14px;
+	font-style: light;
+	font-variant: light;
+	font-weight: 100;
+	line-height: 20px;
+	background-color: #F0F0F0;
+	left: 218px;
+	top: 0 px;
+	padding: 20px;
+	padding-top: 50px;
   position: absolute;
   opacity: 0;
   width: 500px;
-}*/
+}
   
   .movie-card {
-  background-color: #F7F7F7;
-  padding: 50px;
-  padding-top: 0px;
+  background-color: white;
+  padding: 10px;
 
-    
+	  
   }
   
   .movie-title {
-  font-size: 60px;
-  font-weight: 200;
-  line-height: 75px;
-  top: 0px;
-  display: block;
-  padding: 50px 0px;
-  
-  
+	font-size: 50px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.4px;
+	top: 0px;
+	
+	
   }
 
-/*  .movieImage-container {
+  .movieImage-container {
   opacity: 1;
   width: 200px;
   background-color: white;
   top: 400px;
-    
-  }*/
+	  
+  }
 
 
   .page {
@@ -112,22 +108,14 @@ h1 {
     display: block;
     position: absolute;
     z-index: 1 ;
-    
   }
 
   .welcome { 
-    background: #2d2d2d;
-    color: white;
-    padding: 150px;
-  }
-
-  .welcome h1 { 
-  font-size: 64px; 
+    background: green;
   }
 
   .play {
-    background: snow;
-    font-size: 64px; 
+    background: blue;
   }
 
   .hidden {
@@ -135,57 +123,9 @@ h1 {
   }
 
   .header {
-    height: 80px;
+    height: 40px;
     width: 100%;
     background: black;
-    color: white;
-  }
-
-  .header h3 {
-    padding: 35px;
-  }
-
-
-  /* movie card */
-
-  .movie-card {
-    overflow: auto;
-  }
-
-  .movieImage-container { 
-    width: 322px;
-    float: left;
-    height: 400px;
-    overflow: hidden;
-  }
-
-  .movieImage-container img { 
-    width: 100%;
-    height: auto;
-   }
-
-   .description { 
-    float: left;
-    display: block;
-    width: 620px;
-    background: white;
-    line-height: 30px;
-    height: 400px;
-  }
-
-  .movie-description {
-    display: inline-block;
-    padding: 50px;
-    padding-top: 20px;
-  }
-
-
-  h2 {
-    font-size: 25px;
-    display: inline-block;
-    margin-left: 50px;
-    padding-top: 40px;
-    border-bottom: 1px solid black;
   }
 
 </style>
@@ -198,36 +138,26 @@ h1 {
   <body>
 
     <!-- PAGES --> 
-    <div class="page welcome">
-      <h3>Welcome to</h3>
-      <h1>MovieRecommender </h1>
-
+    <div class="page welcome hidden">
     </div>
 
     <div class="page play hidden">
-     <h1 class="movie-title">Movie title </h1>
     </div>
 
     <div class="header">
-      <h3> MovieRecommender </h3>
+
+
+    </div>
+
+    <div class="wrapper">
     </div>
 
 
     <div class="movie-card">
-
       <h1 class="movie-title">Movie title</h1>
-
-      <div class="movieImage-container">
-        <img class="movie-image" src="https://image.tmdb.org/t/p/w185_and_h278_bestv2/cNLZ7YGRikb4IsLblrzu86ndZPw.jpg" />
-      </div>
-
-      <div class="description">
-        <h2> Movie Description </h2>
-        <p class="movie-description">This is a movie description</p>
-      </div>
-
+      <div class="movieImage-container"><img class="movie-image" src="https://image.tmdb.org/t/p/w185_and_h278_bestv2/cNLZ7YGRikb4IsLblrzu86ndZPw.jpg" /></div>
+      <p id="movie-description" class="movie-description">This is a movie description</p>
     </div>
-
 
     <br>
     
@@ -236,10 +166,12 @@ h1 {
   <head>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+    <script src="http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script>
     
-      //sample movie object
+    	//sample movie object
         
         
         
@@ -265,58 +197,43 @@ h1 {
         
         
         // open socket connection
-        var socket = io("http://69f7f269.ngrok.io");
-
-        let maybeList = [];
-        let movie = sampleMovie;
+        var socket = io("http://684e2413.ngrok.io");
         
         // new movie socket
-        socket.on("newMovie", function(movies) {
-          movie = movies.data.selectedMovie;
-          maybeList = movies.data.maybeList;
-
-          initMovie(); 
-        });
-
-        socket.on("accepted", function(data) {
-          movieAccepted();
-        });
-
-        socket.on("maybe", function(data) {
-          showMaybeList();
+        socket.on("foo", function(movies) { 
+          initMovie(movies.data.results[0]) 
         });
 
         // new movie added function
-        function initMovie() {
-          showNewMovie();
-          $(".welcome").addClass("hidden");
-        }
-
-        function movieAccepted() {
-          alert('movie was accepted');
-
-          $(".play").removeClass("hidden");
-
-          $('.movie-title').text("Playing " + movie.title);
-
-        }
-
-        function showMaybeList() {
-          console.log(maybeList);
+        function initMovie(movie) {
+          showNewMovie(movie);
         }
 
         // show new movie
-        function showNewMovie() {
+        function showNewMovie(movie) {
           console.log(movie);
+          
           
           $('.movie-title').text(movie.title);
           $('.movie-image').attr('src', 'https://image.tmdb.org/t/p/w185_and_h278_bestv2' + movie.poster_path );
           $('.movie-description').text(movie.overview);
+        
+        
+        
+        //my animations  
+		//$(".movie-title").animate({opacity: "1"},400,"swing");
+		$(".movie-title").animate({top: "300px"},1000,"easeInCubic");
+		$(".movie-title").delay(1000).animate({opacity: "1"},900,"easeInCubic");
+		
+        $(".movie-image").animate({opacity: "1"},700,"easeInCubic");
 
-          $('.movie-popularity').text(Math.floor(parseInt(movie.popularity)))          
+        $(".movie-description").animate({opacity: ".5"},100,"easeInCubic");
+        $(".movie-description").animate({top: "97px"},900,"easeInCubic").delay(100).animate({height: "210px"},"easeInCubic");
+          
+          
         }
         
-        showNewMovie();
+        showNewMovie(sampleMovie);
 
 
     </script>
