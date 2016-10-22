@@ -196,29 +196,42 @@ h1 {
         
         // open socket connection
         var socket = io("http://69f7f269.ngrok.io");
+
+        let maybeList = [];
+        let movie = sampleMovie;
         
         // new movie socket
-        socket.on("newMovie", function(movies) { 
-          initMovie(movies.data) 
+        socket.on("newMovie", function(movies) {
+          movie = movies.data.selectedMovie;
+          maybeList = movies.data.maybeList;
+
+          initMovie(); 
         });
 
         socket.on("accepted", function(data) {
           movieAccepted();
         });
 
+        socket.on("maybe", function(data) {
+          showMaybeList();
+        });
+
         // new movie added function
-        function initMovie(movie) {
-          showNewMovie(movie);
+        function initMovie() {
+          showNewMovie();
         }
 
         function movieAccepted() {
           alert('movie was accepted');
         }
 
+        function showMaybeList() {
+          console.log(maybeList);
+        }
+
         // show new movie
-        function showNewMovie(movie) {
+        function showNewMovie() {
           console.log(movie);
-          
           
           $('.movie-title').text(movie.title);
           $('.movie-image').attr('src', 'https://image.tmdb.org/t/p/w185_and_h278_bestv2' + movie.poster_path );
@@ -239,7 +252,7 @@ h1 {
           
         }
         
-        showNewMovie(sampleMovie);
+        showNewMovie();
 
 
     </script>

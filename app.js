@@ -46,6 +46,12 @@ app.put("/accept", function(req, res, next) {
     res.send({"foo": true});
 });
 
+app.put("/maybe", function(req, res, next) {
+    console.log(req.body);
+    io.sockets.emit("maybe", {data: req.body});
+    res.send({"foo": true});
+});
+
 server.listen(app.get('port'), function(){
     console.log('Express server on port ' + app.get('port'));
 });
